@@ -2,7 +2,7 @@
     "name": "MeshCentral-SignalRConnector",
     "shortname": "connector",
     "description": "A plugin that creates an outbound SignalR connection to a specified server.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "author": "BlackSaltLabs",
     "entryPoint": "connector.js",
     
