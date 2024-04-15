@@ -31,7 +31,13 @@ module.exports.connector = function (parent) {
 
     obj.onDeviceRefreshEnd = function() {
         obj.debug('PLUGIN', pluginName, 'Plugin connector is active');
+        console.log('Plugin connector is active');
 
+    };
+
+    obj.server_startup = function() {
+        obj.debug('PLUGIN', pluginName, 'Plugin connector is starting');
+        console.log('Plugin connector is starting');
     };
 
 
