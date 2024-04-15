@@ -13,6 +13,10 @@ module.exports.connector = function (parent) {
 
     obj.parent = parent;
     obj.meshServer = parent.parent;
+    obj.debug = obj.meshServer.debug;
+
+
+    var pluginName = "connector";
 
     obj.exports = [
         "getConnectorStatus"
@@ -24,6 +28,11 @@ module.exports.connector = function (parent) {
 
         return "Connector is running";    
     }
+
+    obj.onDeviceRefreshEnd = function() {
+        obj.debug('PLUGIN', pluginName, 'Plugin connector is active');
+
+    };
 
 
     return obj;
