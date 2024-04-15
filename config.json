@@ -1,0 +1,22 @@
+{
+    "name": "MeshCentral-SignalRConnector",
+    "shortname": "connector",
+    "description": "A plugin that creates an outbound SignalR connection to a specified server.",
+    "version": "0.0.1",
+    "author": "BlackSaltLabs",
+    "entryPoint": "plugin.js",
+    
+
+  "hasAdminPanel": false,
+  "homepage": "https://github.com/BlackSaltLabs/MeshCentral-SignalRConnector",
+  "changelogUrl": "https://raw.githubusercontent.com/BlackSaltLabs/MeshCentral-SignalRConnector/main/changelog.md",
+  "configUrl": "https://raw.githubusercontent.com/BlackSaltLabs/MeshCentral-SignalRConnector/main/config.json",
+  "downloadUrl": "https://github.com/BlackSaltLabs/MeshCentral-SignalRConnector/archive/main.zip",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BlackSaltLabs/MeshCentral-SignalRConnector.git"
+  },
+  "versionHistoryUrl": "https://api.github.com/repos/BlackSaltLabs/MeshCentral-SignalRConnector/tags",
+  "meshCentralCompat": ">=0.9.98"
+  }
+  
