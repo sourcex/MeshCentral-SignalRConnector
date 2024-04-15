@@ -4,7 +4,7 @@
     "description": "A plugin that creates an outbound SignalR connection to a specified server.",
     "version": "0.0.1",
     "author": "BlackSaltLabs",
-    "entryPoint": "plugin.js",
+    "entryPoint": "connector.js",
     
 
   "hasAdminPanel": false,
