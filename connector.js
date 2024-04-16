@@ -65,18 +65,15 @@ module.exports.connector = function (parent) {
     };
 
     try {
-      let session = await Session.create(url, options);
-      console.log("Session created");
-      
-      //Check to see if session is defined
-        if (session === undefined) {
-            console.log("Session is undefined");
+        if(obj.session !== undefined) {
+            console.log("Session is defined");
             return;
         }
 
-      console.log("Session: " + JSON.stringify(session));
-
-      var users = await session.list_users();
+      obj.session = await Session.create(url, options);
+      console.log("Session created");
+     
+      var users = await session.list_users();      
       console.log("Users: " + JSON.stringify(users));
 
     } catch (err) {
@@ -85,10 +82,13 @@ module.exports.connector = function (parent) {
     }
   };
 
-  obj.timerTick = function () {
+  obj.timerTick = async function () {
     console.log("Timer tick");
 
     obj.localConnect();
+
+    var devices = await obj.session.list_devices();
+    console.log("Devices: " + JSON.stringify(devices));
 
   };
 
