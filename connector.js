@@ -30,14 +30,10 @@ module.exports.connector = function (parent) {
 
     obj.timerTick = function() {
         console.log('Timer tick');
-        obj.meshServer.meshCtrl.getSession().then(function(session) {
-            console.log('Session: ' + session);
-        });
     }
 
     obj.setupTimer = function() {        
         obj.intervalTimer = setInterval(obj.timerTick, 1 * 60 * 1000);
-
     }
 
     obj.server_startup = function() {
