@@ -42,7 +42,7 @@ module.exports.connector = function (parent) {
 
     obj.url = config.url;
     obj.user = config.user;
-    obj.loginkey = config.loginkey;   
+    obj.loginkey = config.loginkey;
 
     obj.hubUrl = config.hubUrl;
     obj.hubToken = config.hubToken;
@@ -57,10 +57,14 @@ module.exports.connector = function (parent) {
       loginkey: obj.loginkey,
     };
 
-    let session = await Session.create(url, { options });
+    try {
+      let session = await Session.create(url, { options });
 
-    var users = await session.list_users();
-    console.log("Users: " + JSON.stringify(users));
+      var users = await session.list_users();
+      console.log("Users: " + JSON.stringify(users));
+    } catch (err) {
+      console.log("Error connecting to local instance: " + err);
+    }
   };
 
   obj.timerTick = function () {
