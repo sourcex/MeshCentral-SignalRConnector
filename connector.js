@@ -70,6 +70,8 @@ module.exports.connector = function (parent) {
     console.log("Plugin connector is starting");
 
     obj.getConfig();
+    obj.localConnect();
+    
     obj.setupTimer();
   };
 
