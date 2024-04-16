@@ -44,6 +44,7 @@ module.exports.connector = function (parent) {
     obj.url = config.url;
     obj.user = config.user;
     obj.loginkey = config.loginkey;
+    obj.password = config.password;
 
     obj.hubUrl = config.hubUrl;
     obj.hubToken = config.hubToken;
@@ -55,10 +56,9 @@ module.exports.connector = function (parent) {
     var url = obj.url;
     var options = {
       user: obj.user,
-      loginkey: obj.loginkey,
+      password: obj.password,
+      //loginkey: obj.loginkey,
     };
-
-    console.log("options: " + JSON.stringify(options));
 
     try {
       let session = await Session.create(url, options);

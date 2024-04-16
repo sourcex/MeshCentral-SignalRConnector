@@ -1,6 +1,7 @@
 {
     "url": "ws://localhost",
     "user": "user",
+    "password": "",
     "loginkey": "",
 
     "hubUrl": "https://hub",
