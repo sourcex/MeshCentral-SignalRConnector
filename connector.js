@@ -5,8 +5,6 @@
 
 "use strict";
 
-//const { HubConnectionBuilder } = require('@microsoft/signalr');
-//import signalr from 'node-signalr'
 
 const { HubConnectionBuilder } = require('node-signalr');
 const { Session } = require('libmeshctrl');
@@ -28,6 +26,23 @@ module.exports.connector = function (parent) {
         return "Connector is running";    
     }
 
+    obj.getConfig = function () {
+        var fs = require('fs');
+        var path = require('path');
+        var configFile = 'appsettings.json';
+
+        var config = null;
+        try {
+            var configPath = path.join(__dirname, configFile);
+            var configData = fs.readFileSync(configPath);
+            config = JSON.parse(configData);
+        }
+        catch (err) {
+            console.log('Error reading config file: ' + err);
+        }
+        console.log('Config: ' + config);
+    }
+
     obj.timerTick = function() {
         console.log('Timer tick');
     }
@@ -39,6 +54,7 @@ module.exports.connector = function (parent) {
     obj.server_startup = function() {
         console.log('Plugin connector is starting');
 
+        obj.getConfig();
         obj.setupTimer();
     };
 
