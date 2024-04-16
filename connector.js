@@ -85,7 +85,7 @@ module.exports.connector = function (parent) {
   obj.timerTick = async function () {
     console.log("Timer tick");
 
-    obj.localConnect();
+    await obj.localConnect();
 
     var devices = await obj.session.list_devices();
     console.log("Devices: " + JSON.stringify(devices));
