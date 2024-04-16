@@ -7,6 +7,7 @@
 
 //const { HubConnectionBuilder } = require('@microsoft/signalr');
 //import signalr from 'node-signalr'
+const { HubConnectionBuilder } = require('node-signalr');
 
 module.exports.connector = function (parent) {
     var obj = {};
@@ -15,12 +16,10 @@ module.exports.connector = function (parent) {
     obj.meshServer = parent.parent;
     obj.debug = obj.meshServer.debug;
 
-
     var pluginName = "connector";
 
     obj.exports = [
         'getConnectorStatus',
-        'onDeviceRefreshEnd',
     ]
 
     obj.getConnectorStatus = function () {
@@ -30,15 +29,12 @@ module.exports.connector = function (parent) {
         return "Connector is running";    
     }
 
-    obj.onDeviceRefreshEnd = function() {
-        obj.debug('PLUGIN', pluginName, 'Plugin connector is active');
-        console.log('Plugin connector is active');
-
-    };
-
     obj.server_startup = function() {
-        obj.debug('PLUGIN', pluginName, 'Plugin connector is starting');
+
+        obj.debug('PLUGIN', pluginName, 'DEBUG: Plugin connector is starting');
+
         console.log('Plugin connector is starting');
+
     };
 
 
