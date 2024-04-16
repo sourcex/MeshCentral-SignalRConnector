@@ -47,6 +47,8 @@ module.exports.connector = function (parent) {
   };
 
   obj.localConnect = async function () {
+    console.log("Connecting to local instance");
+    
     var url = obj.url;
     var options = {
       loginkey: obj.loginkey,
@@ -71,7 +73,7 @@ module.exports.connector = function (parent) {
 
     obj.getConfig();
     obj.localConnect();
-    
+
     obj.setupTimer();
   };
 
