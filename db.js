@@ -38,10 +38,6 @@ module.exports.CreateDB = function (meshserver) {
         id = formatId(id);
         return obj.file.find( { _id: id } ).toArray();
     };
-
-    
-
-
   };
 
   if (meshserver.args.mongodb) {
