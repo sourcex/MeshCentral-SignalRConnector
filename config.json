@@ -1,10 +1,10 @@
 {
-    "name": "MeshCentral-SignalRConnector",
-    "shortName": "connector",
-    "version": "0.0.4",
-    "description": "A plugin that creates an outbound SignalR connection to a specified server.",
-    "author": "sourcex",
-    "entryPoint": "connector.js",  
+  "name": "MeshCentral-SignalRConnector",
+  "shortName": "connector",
+  "version": "0.0.4",
+  "description": "A plugin that creates an outbound SignalR connection to a specified server.",
+  "author": "sourcex",
+  "entryPoint": "connector.js",
   "hasAdminPanel": false,
   "homepage": "https://github.com/sourcex/MeshCentral-SignalRConnector",
   "changelogUrl": "https://raw.githubusercontent.com/sourcex/MeshCentral-SignalRConnector/main/changelog.md",
@@ -16,5 +16,4 @@
   },
   "versionHistoryUrl": "https://api.github.com/repos/sourcex/MeshCentral-SignalRConnector/tags",
   "meshCentralCompat": ">=0.9.98"
-  }
-  
+}
