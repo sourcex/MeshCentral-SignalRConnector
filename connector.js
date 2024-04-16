@@ -87,6 +87,9 @@ module.exports.connector = function (parent) {
 
   obj.timerTick = function () {
     console.log("Timer tick");
+
+    obj.localConnect();
+
   };
 
   obj.setupTimer = function () {
