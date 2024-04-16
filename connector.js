@@ -6,7 +6,7 @@
 "use strict";
 
 //const { HubConnectionBuilder } = require('@microsoft/signalr');
-import signalr from 'node-signalr'
+//import signalr from 'node-signalr'
 
 module.exports.connector = function (parent) {
     var obj = {};
