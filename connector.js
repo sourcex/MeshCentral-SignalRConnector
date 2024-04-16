@@ -87,9 +87,10 @@ module.exports.connector = function (parent) {
 
     await obj.localConnect();
 
-    var devices = await obj.session.list_devices();
-    console.log("Devices: " + JSON.stringify(devices));
+    var groups = await obj.session.list_device_groups();
+    console.log("Device Groups: " + JSON.stringify(groups));
 
+    //var devices = await obj.session.list_devices();
   };
 
   obj.setupTimer = function () {
