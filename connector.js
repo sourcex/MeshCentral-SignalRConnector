@@ -41,6 +41,8 @@ module.exports.connector = function (parent) {
             console.log('Error reading config file: ' + err);
         }
         console.log('Config: ' + config);
+        console.log('Config: ' + JSON.stringify(config));
+        
     }
 
     obj.timerTick = function() {
