@@ -2,21 +2,21 @@
     "name": "MeshCentral-SignalRConnector",
     "shortname": "connector",
     "description": "A plugin that creates an outbound SignalR connection to a specified server.",
-    "version": "0.0.2",
-    "author": "BlackSaltLabs",
+    "version": "0.0.3",
+    "author": "sourcex",
     "entryPoint": "connector.js",
     
 
   "hasAdminPanel": false,
-  "homepage": "https://github.com/BlackSaltLabs/MeshCentral-SignalRConnector",
-  "changelogUrl": "https://raw.githubusercontent.com/BlackSaltLabs/MeshCentral-SignalRConnector/main/changelog.md",
-  "configUrl": "https://raw.githubusercontent.com/BlackSaltLabs/MeshCentral-SignalRConnector/main/config.json",
-  "downloadUrl": "https://github.com/BlackSaltLabs/MeshCentral-SignalRConnector/archive/main.zip",
+  "homepage": "https://github.com/sourcex/MeshCentral-SignalRConnector",
+  "changelogUrl": "https://raw.githubusercontent.com/sourcex/MeshCentral-SignalRConnector/main/changelog.md",
+  "configUrl": "https://raw.githubusercontent.com/sourcex/MeshCentral-SignalRConnector/main/config.json",
+  "downloadUrl": "https://github.com/sourcex/MeshCentral-SignalRConnector/archive/main.zip",
   "repository": {
     "type": "git",
-    "url": "https://github.com/BlackSaltLabs/MeshCentral-SignalRConnector.git"
+    "url": "https://github.com/sourcex/MeshCentral-SignalRConnector.git"
   },
-  "versionHistoryUrl": "https://api.github.com/repos/BlackSaltLabs/MeshCentral-SignalRConnector/tags",
+  "versionHistoryUrl": "https://api.github.com/repos/sourcex/MeshCentral-SignalRConnector/tags",
   "meshCentralCompat": ">=0.9.98"
   }
   

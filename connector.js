@@ -19,8 +19,8 @@ module.exports.connector = function (parent) {
     var pluginName = "connector";
 
     obj.exports = [
-        "getConnectorStatus",
-        "onDeviceRefreshEnd",
+        'getConnectorStatus',
+        'onDeviceRefreshEnd',
     ]
 
     obj.getConnectorStatus = function () {
