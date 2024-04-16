@@ -61,7 +61,7 @@ module.exports.connector = function (parent) {
     console.log("options: " + JSON.stringify(options));
 
     try {
-      let session = await Session.create(url, { options });
+      let session = await Session.create(url, options);
 
       var users = await session.list_users();
       console.log("Users: " + JSON.stringify(users));
