@@ -37,6 +37,7 @@ module.exports.connector = function (parent) {
     }
 
     console.log("WS Url: " + config.url);
+    console.log("User: " + config.user);
     console.log("Login Key length:" + config.loginkey.length);
     console.log("Hub Url: " + config.hubUrl);
 
@@ -56,6 +57,8 @@ module.exports.connector = function (parent) {
       user: obj.user,
       loginkey: obj.loginkey,
     };
+
+    console.log("options: " + JSON.stringify(options));
 
     try {
       let session = await Session.create(url, { options });
