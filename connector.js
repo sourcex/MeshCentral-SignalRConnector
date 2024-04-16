@@ -37,10 +37,12 @@ module.exports.connector = function (parent) {
     }
 
     console.log("WS Url: " + config.url);
+    console.log("Login Key length:" + config.loginkey.length);
     console.log("Hub Url: " + config.hubUrl);
 
     obj.url = config.url;
-    obj.loginkey = config.loginkey;
+    obj.user = config.user;
+    obj.loginkey = config.loginkey;   
 
     obj.hubUrl = config.hubUrl;
     obj.hubToken = config.hubToken;
@@ -48,9 +50,10 @@ module.exports.connector = function (parent) {
 
   obj.localConnect = async function () {
     console.log("Connecting to local instance");
-    
+
     var url = obj.url;
     var options = {
+      user: obj.user,
       loginkey: obj.loginkey,
     };
 

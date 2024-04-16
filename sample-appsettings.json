@@ -1,5 +1,5 @@
 {
-    "url": "wss://server",
+    "url": "ws://localhost",
     "loginkey": "",
 
     "hubUrl": "https://hub",
