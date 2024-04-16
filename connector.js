@@ -7,7 +7,9 @@
 
 //const { HubConnectionBuilder } = require('@microsoft/signalr');
 //import signalr from 'node-signalr'
+
 const { HubConnectionBuilder } = require('node-signalr');
+const { Session } = require('libmeshctrl');
 
 module.exports.connector = function (parent) {
     var obj = {};
@@ -16,8 +18,6 @@ module.exports.connector = function (parent) {
     obj.meshServer = parent.parent;
     obj.debug = obj.meshServer.debug;
 
-    var pluginName = "connector";
-
     obj.exports = [
         'getConnectorStatus',
     ]
@@ -25,17 +25,28 @@ module.exports.connector = function (parent) {
     obj.getConnectorStatus = function () {
 
         //TODO: Check the status of the SignalR connection
-
         return "Connector is running";    
     }
 
+    obj.timerTick = function() {
+        console.log('Timer tick');
+        obj.meshServer.meshCtrl.getSession().then(function(session) {
+            console.log('Session: ' + session);
+        });
+    }
+
+    obj.setupTimer = function() {        
+        obj.intervalTimer = setInterval(obj.timerTick, 1 * 60 * 1000);
+
+    }
+
     obj.server_startup = function() {
-
-        obj.debug('PLUGIN', pluginName, 'DEBUG: Plugin connector is starting');
-
         console.log('Plugin connector is starting');
 
+        obj.setupTimer();
     };
+
+
 
 
     return obj;
