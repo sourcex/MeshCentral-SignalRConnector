@@ -59,19 +59,29 @@ module.exports.connector = function (parent) {
     var url = obj.url;
     var options = {
       user: obj.user,
-      password: obj.password
+      password: obj.password,
       //loginkey: obj.loginkey,
+      ignoreSSL: true,
     };
 
     try {
       let session = await Session.create(url, options);
       console.log("Session created");
+      
+      //Check to see if session is defined
+        if (session === undefined) {
+            console.log("Session is undefined");
+            return;
+        }
+
       console.log("Session: " + JSON.stringify(session));
 
       var users = await session.list_users();
       console.log("Users: " + JSON.stringify(users));
+
     } catch (err) {
       console.log("Error connecting to local instance: " + err);
+      console.trace();
     }
   };
 
