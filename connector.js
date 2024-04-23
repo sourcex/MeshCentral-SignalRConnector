@@ -93,9 +93,12 @@ module.exports.connector = function (parent) {
         var commandData = JSON.parse(command);
 
         if (commandData.command === "list_users") {
-          obj.session.list_device_groups().then((groups) => {
-            let self = this;
 
+          console.log("Received list_users command");
+
+          obj.session.list_users().then((groups) => {
+            let self = this;
+                       
             var response = {
               id: commandData.id,
               command: commandData.command,
@@ -177,8 +180,6 @@ module.exports.connector = function (parent) {
       return;
     }
   };
-
-
 
   obj.setupTimer = function () {
     obj.intervalTimer = setInterval(obj.timerTick, 1 * 60 * 1000);
