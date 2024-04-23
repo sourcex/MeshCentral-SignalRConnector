@@ -38,10 +38,8 @@ module.exports.connector = function (parent) {
 
     console.log("WS Url: " + config.url);
     console.log("User: " + config.user);
-
     console.log("Login Key length:" + config.loginkey.length);
     console.log("Password length:" + config.password.length);
-
     console.log("Hub Url: " + config.hubUrl);
 
     obj.url = config.url;
@@ -55,110 +53,76 @@ module.exports.connector = function (parent) {
   };
 
   obj.hubConnect = async function () {
-
     console.log("Connecting to SignalR hub");
     const { fetch } = require("node-fetch");
 
     //Get a token from the authentication REST endpoint
-    var token = null;
     try {
       var tokenUrl = obj.hubUrl + "/api/mesh";
       var tokenResponse = await fetch(tokenUrl, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           username: obj.hubUser,
           password: obj.hubToken,
         }),
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
 
-      if(!tokenResponse.ok) {
+      if (!tokenResponse.ok) {
         console.log("Error getting token");
         return;
       }
 
       var tokenData = await tokenResponse.json();
-      token = tokenData.token;
-    } catch (err) {
-      console.log("Error getting token: " + err);
-    }
+      const token = tokenData.token;
 
-    //Connect to the SignalR hub with the token
-    //https://learn.microsoft.com/en-us/aspnet/core/signalr/configuration?view=aspnetcore-8.0&tabs=dotnet#configure-bearer-authentication
-    try {
+      //Connect to the SignalR hub with the token
+      //https://learn.microsoft.com/en-us/aspnet/core/signalr/configuration?view=aspnetcore-8.0&tabs=dotnet#configure-bearer-authentication
+
       var connection = new HubConnectionBuilder()
         .withUrl(obj.hubUrl + "/hub", {
           accessTokenFactory: () => token,
         })
-        .configureLogging("debug")
         .withAutomaticReconnect()
         .build();
 
-      connection.on("ReceiveMessage", (user, message) => {
-        console.log("Received message: " + message);
+      connection.on("ReceiveCommand", (command) => {
+        console.log("Received command: " + command);
+        var commandData = JSON.parse(command);
+
+        if (commandData.command === "list_users") {
+          obj.session.list_device_groups().then((groups) => {
+            let self = this;
+
+            var response = {
+              id: commandData.id,
+              command: commandData.command,
+              data: groups,
+            };
+
+            connection.invoke(
+              "SendMessageToHub",
+              JSON.stringify(response)
+            );
+          });
+        }
       });
-
-
-      /* 
-        Process commands
-
-            list_devices
-            list_users
-            list_user_groups
-            listen_to_events
-
-            device_info
-
-            add_user
-            add_user_to_device_group
-            add_users_to_device
-
-
-            add_user_group
-            add_users_to_user_group
-
-            move_to_device_group
-            edit_device_group
-
-            wake_devices
-            run_command
-        */
-
-
-        connection.on("ReceiveCommand", (command) => {
-            console.log("Received command: " + command);
-            var commandData = JSON.parse(command);
-            var commandName = commandData.name;
-            var commandParams = commandData.params;
-
-            if (commandName === "restart") {
-                console.log("Restarting connector");
-                obj.parent.restart();
-            }
-
-            if (commandName === "stop") {
-                console.log("Stopping connector");
-                obj.parent.stop();
-            }
-
-        });     
 
       connection.onclose((error) => {
         console.log("Connection closed: " + error);
+        obj.hubConnect().then(() => {
+          console.log("Attempted reconnection to hub");
+        });
       });
 
       await connection.start();
       console.log("Connected to hub");
 
-      //Send a message to the hub
-      await connection.invoke("SendMessage", "Connector", "Hello from connector");
     } catch (err) {
       console.log("Error connecting to hub: " + err);
     }
-
-
   };
 
   obj.localConnect = async function () {
@@ -168,7 +132,6 @@ module.exports.connector = function (parent) {
     var options = {
       user: obj.user,
       password: obj.password,
-      //loginkey: obj.loginkey,
       ignoreSSL: true,
     };
 
@@ -181,24 +144,41 @@ module.exports.connector = function (parent) {
       obj.session = await Session.create(url, options);
       console.log("Session created");
 
-      var users = await session.list_users();
-      console.log("Users: " + JSON.stringify(users));
-    } catch (err) {
+   } catch (err) {
       console.log("Error connecting to local instance: " + err);
       console.trace();
     }
   };
 
+  obj.SendDeviceGroupList = function (connection) {
+    //Send a device group list to the hub
+    obj.session.list_device_groups().then((groups) => {
+      let self = this;
+
+      var response = {
+        //We aren't tracking anything with this on the server side
+        id: "00000000-0000-0000-0000-000000000000",
+        command: "list_device_groups",
+        data: groups,
+      };
+
+      connection.invoke(
+        "SendCommandResponse",
+        JSON.stringify(response)
+      );
+    });
+  }
+
   obj.timerTick = async function () {
     console.log("Timer tick");
 
-    await obj.localConnect();
-
-    var groups = await obj.session.list_device_groups();
-    console.log("Device Groups: " + JSON.stringify(groups));
-
-    //var devices = await obj.session.list_devices();
+    if (obj.session === undefined) {
+      console.log("Session is undefined");
+      return;
+    }
   };
+
+
 
   obj.setupTimer = function () {
     obj.intervalTimer = setInterval(obj.timerTick, 1 * 60 * 1000);
@@ -209,6 +189,7 @@ module.exports.connector = function (parent) {
 
     obj.getConfig();
     obj.localConnect();
+    obj.hubConnect();
 
     obj.setupTimer();
   };
