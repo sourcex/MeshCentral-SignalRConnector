@@ -120,15 +120,13 @@ module.exports.connector = function (parent) {
           console.log("Received list_events command");
 
           obj.session.list_events().then((events) => {
-            let self = this;
-
             var response = {
               id: commandData.id,
               command: commandData.command,
               data: events,
             };
 
-            connection.invoke("SendCommandResponse", JSON.stringify(response));
+            obj.connection.invoke("SendCommandResponse", JSON.stringify(response));
           });
         }
       });
@@ -205,7 +203,7 @@ module.exports.connector = function (parent) {
     }
 
     obj.SendDeviceGroupList();
-    
+
   };
 
   obj.setupTimer = function () {
