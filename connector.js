@@ -91,21 +91,17 @@ module.exports.connector = function (parent) {
         .withAutomaticReconnect()
         .build();
 
-        connection.on("command", (command) => {
-            console.log("command: " + command);
-        });
-
-      connection.on("ReceiveCommand", (command) => {
-        console.log("Received command: " + command);
-        var commandData = JSON.parse(command);
+      connection.on("command", (command) => {
+        console.log("command: " + command);
 
         obj.localConnect();
+
+        var commandData = JSON.parse(command);
 
         if (commandData.command === "list_users") {
           console.log("Received list_users command");
 
           obj.session.list_users().then((users) => {
-
             console.log("List users response: " + users);
 
             var response = {
@@ -194,13 +190,13 @@ module.exports.connector = function (parent) {
 
   obj.timerTick = async function () {
     console.log("Timer tick");
-     if (obj.session === undefined) {
-       console.log("Session is undefined");
-     } else {
+    if (obj.session === undefined) {
+      console.log("Session is undefined");
+    } else {
       console.log("Session is defined");
-     }
+    }
 
-    if(obj.connection === undefined) {
+    if (obj.connection === undefined) {
       console.log("Connection is undefined");
     } else {
       console.log("Connection status: " + obj.connection.state);
