@@ -94,11 +94,9 @@ module.exports.connector = function (parent) {
       connection.on("ReceiveCommand", (command) => {
         console.log("ReceiveCommand: " + command);
 
-        obj.localConnect();
-
         var commandData = JSON.parse(command);
 
-        if (commandData.command === "list_users") {
+        if (commandData.Command === "list_users") {
           console.log("Received list_users command");
 
           obj.session.list_users().then((users) => {
@@ -114,7 +112,7 @@ module.exports.connector = function (parent) {
           });
         }
 
-        if (commandData.command === "list_events") {
+        if (commandData.Command === "list_events") {
           console.log("Received list_events command");
 
           obj.session.list_events().then((events) => {
@@ -170,10 +168,6 @@ module.exports.connector = function (parent) {
       console.log("Error connecting to local instance: " + err);
       console.trace();
     }
-    
-    var groups = await obj.session.list_device_groups();
-    console.log("Groups: " + groups);
-
   };
 
   obj.SendDeviceGroupList = async function () {
