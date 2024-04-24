@@ -6,7 +6,6 @@
 "use strict";
 
 //https://www.npmjs.com/package/@microsoft/signalr
-const { signalR  } = require("@microsoft/signalr");
 const { Session } = require("libmeshctrl");
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
@@ -81,8 +80,9 @@ module.exports.connector = function (parent) {
 
       //Connect to the SignalR hub with the token
       //https://learn.microsoft.com/en-us/aspnet/core/signalr/configuration?view=aspnetcore-8.0&tabs=dotnet#configure-bearer-authentication
+      const signalR = require("@microsoft/signalr");
 
-      var connection = new signalR.HubConnectionBuilder()
+      let connection = new signalR.HubConnectionBuilder()
         .withUrl(obj.hubUrl + "/meshhub", {
           accessTokenFactory: () => token,
         })
