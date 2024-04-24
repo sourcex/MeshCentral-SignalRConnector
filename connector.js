@@ -125,7 +125,7 @@ module.exports.connector = function (parent) {
 
     } catch (err) {
       console.log("Error connecting to hub: " + err);
-      //setTimeout(obj.hubConnect, 100);
+      setTimeout(obj.hubConnect, 500);
     }
   };
 
@@ -179,12 +179,6 @@ module.exports.connector = function (parent) {
     if (obj.session === undefined) {
       console.log("Session is undefined");
       obj.localConnect();
-    }
-
-    console.log("SignalR status: " + obj.connection.state)
-    if (obj.connection.state != HubConnectionState.Connected) {
-      console.log("Reconnecting to SignalR hub");
-      obj.hubConnect();
     }
   };
 
