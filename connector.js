@@ -112,7 +112,7 @@ module.exports.connector = function (parent) {
               data: users,
             };
 
-            obj.connection.invoke("SendMessageToHub", JSON.stringify(response));
+            obj.connection.invoke("SendCommandResponse", JSON.stringify(response));
           });
         }
 
@@ -128,7 +128,7 @@ module.exports.connector = function (parent) {
               data: events,
             };
 
-            connection.invoke("SendMessageToHub", JSON.stringify(response));
+            connection.invoke("SendCommandResponse", JSON.stringify(response));
           });
         }
       });
