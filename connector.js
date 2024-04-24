@@ -100,7 +100,7 @@ module.exports.connector = function (parent) {
 
         var commandData = JSON.parse(command);
 
-        if (commandData.Command === "list_users") {
+        if (commandData.command === "list_users") {
           console.log("Received list_users command");
 
           obj.session.list_users().then((users) => {
@@ -116,7 +116,7 @@ module.exports.connector = function (parent) {
           });
         }
 
-        if (commandData.Command === "list_events") {
+        if (commandData.command === "list_events") {
           console.log("Received list_events command");
 
           obj.session.list_events().then((events) => {
