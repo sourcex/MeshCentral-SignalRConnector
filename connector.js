@@ -91,6 +91,10 @@ module.exports.connector = function (parent) {
         .withAutomaticReconnect()
         .build();
 
+      connection.on("ReceiveMessage", (message) => {
+        console.log("ReceiveMessage: " + message);
+      });
+
       connection.on("ReceiveCommand", (command) => {
         console.log("ReceiveCommand: " + command);
 
