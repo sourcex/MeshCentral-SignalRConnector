@@ -178,7 +178,7 @@ module.exports.connector = function (parent) {
     //Send a device group list to the hub
 
     console.log("Sending device group list");
-    await obj.session.list_device_groups();
+    var groups = await obj.session.list_device_groups();
 
     var response = {
       //We aren't tracking anything with this on the server side
@@ -203,6 +203,9 @@ module.exports.connector = function (parent) {
     } else {
       console.log("Connection status: " + obj.connection.state);
     }
+
+    obj.SendDeviceGroupList();
+    
   };
 
   obj.setupTimer = function () {
