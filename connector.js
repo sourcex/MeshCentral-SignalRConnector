@@ -197,22 +197,36 @@ module.exports.connector = function (parent) {
     obj.connection.invoke("SendCommandResponse", JSON.stringify(response));
   };
 
+  obj.SendEvents() = async function (){
+    obj.session.listen_to_events((event) => {
+      console.log("Event: " + event);
+
+      var response = {
+        id: "00000000-0000-0000-0000-000000000000",
+        command: "event",
+        data: event,
+      };
+
+      obj.connection.invoke("SendEvent", JSON.stringify(response));
+
+    });
+  }
+
   obj.timerTick = async function () {
     console.log("Timer tick");
     if (obj.session === undefined) {
       console.log("Session is undefined");
     } else {
-      console.log("Session is defined");
+      //console.log("Session is defined");
     }
 
     if (obj.connection === undefined) {
       console.log("Connection is undefined");
     } else {
-      console.log("Connection status: " + obj.connection.state);
+      //console.log("Connection status: " + obj.connection.state);
     }
 
     obj.SendDeviceGroupList();
-
   };
 
   obj.setupTimer = function () {
@@ -228,6 +242,8 @@ module.exports.connector = function (parent) {
       obj.localConnect();
       obj.hubConnect();
       obj.setupTimer();
+      
+      obj.SendEvents();
     }, 3000);
   };
 
