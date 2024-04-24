@@ -152,6 +152,7 @@ module.exports.connector = function (parent) {
       obj.connection = connection;
 
       obj.UpdateServerName();
+      obj.SendEvents();
 
     } catch (err) {
       console.log("Error connecting to hub: " + err);
@@ -259,7 +260,6 @@ module.exports.connector = function (parent) {
       obj.localConnect();
       obj.hubConnect();
       obj.setupTimer();
-      obj.SendEvents();
     }, 3000);
   };
 
