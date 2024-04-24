@@ -25,6 +25,7 @@ module.exports.connector = function (parent) {
   };
 
   obj.getConfig = function () {
+
     var fs = require("fs");
     var path = require("path");
     var configFile = "appsettings.json";
@@ -34,15 +35,21 @@ module.exports.connector = function (parent) {
       var configPath = path.join(__dirname, configFile);
       var configData = fs.readFileSync(configPath);
       config = JSON.parse(configData);
+
+      const os = require('os'); 
+      var hostname = os.hostname();
     } catch (err) {
       console.log("Error reading config file: " + err);
     }
 
+    console.log("Hostname: " + hostname);
     console.log("WS Url: " + config.url);
     console.log("User: " + config.user);
     console.log("Login Key length:" + config.loginkey.length);
     console.log("Password length:" + config.password.length);
     console.log("Hub Url: " + config.hubUrl);
+
+    obj.hostname = hostname;
 
     obj.url = config.url;
     obj.user = config.user;
@@ -104,7 +111,7 @@ module.exports.connector = function (parent) {
           console.log("Received list_users command");
 
           obj.session.list_users().then(users => {
-            console.log("List users response: " + users);
+            console.log("List users response: " + users.length);
 
             var response = {
               id: commandData.id,
@@ -120,7 +127,8 @@ module.exports.connector = function (parent) {
           console.log("Received list_events command");
 
           obj.session.list_events().then(events => {
-            console.log("List events response: " + events);
+            console.log("List events response: " + events.length);
+
             var response = {
               id: commandData.id,
               command: commandData.command,
