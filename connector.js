@@ -82,7 +82,7 @@ module.exports.connector = function (parent) {
       //https://learn.microsoft.com/en-us/aspnet/core/signalr/configuration?view=aspnetcore-8.0&tabs=dotnet#configure-bearer-authentication
 
       var connection = new HubConnectionBuilder()
-        .withUrl(obj.hubUrl + "/hub", {
+        .withUrl(obj.hubUrl + "/meshhub", {
           accessTokenFactory: () => token,
         })
         .withAutomaticReconnect()
