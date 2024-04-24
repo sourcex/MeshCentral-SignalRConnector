@@ -255,8 +255,8 @@ module.exports.connector = function (parent) {
     setTimeout(() => {
       obj.localConnect();
       obj.hubConnect();
-      obj.UpdateServerName();
       obj.setupTimer();
+      obj.UpdateServerName();
       obj.SendEvents();
     }, 3000);
   };
