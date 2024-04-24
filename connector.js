@@ -91,6 +91,10 @@ module.exports.connector = function (parent) {
         .withAutomaticReconnect()
         .build();
 
+        connection.on("command", (command) => {
+            console.log("command: " + command);
+        });
+
       connection.on("ReceiveCommand", (command) => {
         console.log("Received command: " + command);
         var commandData = JSON.parse(command);
