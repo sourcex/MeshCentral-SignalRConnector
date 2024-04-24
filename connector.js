@@ -7,6 +7,7 @@
 
 const { HubConnectionBuilder } = require("node-signalr");
 const { Session } = require("libmeshctrl");
+const { fetch } = require("node-fetch");
 
 module.exports.connector = function (parent) {
   var obj = {};
@@ -54,7 +55,6 @@ module.exports.connector = function (parent) {
 
   obj.hubConnect = async function () {
     console.log("Connecting to SignalR hub");
-    const { fetch } = require("node-fetch");
 
     //Get a token from the authentication REST endpoint
     try {
@@ -98,7 +98,7 @@ module.exports.connector = function (parent) {
 
           obj.session.list_users().then((groups) => {
             let self = this;
-                       
+
             var response = {
               id: commandData.id,
               command: commandData.command,
