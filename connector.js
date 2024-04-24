@@ -123,6 +123,7 @@ module.exports.connector = function (parent) {
 
       await connection.start();
       console.log("Connected to hub");
+      obj.connection = connection;
 
     } catch (err) {
       console.log("Error connecting to hub: " + err);
@@ -156,13 +157,15 @@ module.exports.connector = function (parent) {
     }
   };
 
-  obj.SendDeviceGroupList = function (connection) {
+  obj.SendDeviceGroupList = function () {
+
     //Send a device group list to the hub
+    obj.session.list_device_groups();
     obj.session.list_device_groups().then((groups) => {
       let self = this;
 
       console.log("Sending device group list");
-      
+
       var response = {
         //We aren't tracking anything with this on the server side
         id: "00000000-0000-0000-0000-000000000000",
@@ -170,7 +173,7 @@ module.exports.connector = function (parent) {
         data: groups,
       };
 
-      connection.invoke(
+      obj.connection.invoke(
         "SendCommandResponse",
         JSON.stringify(response)
       );
@@ -178,6 +181,8 @@ module.exports.connector = function (parent) {
   }
 
   obj.timerTick = async function () {
+    self = this;
+
     console.log("Timer tick");
 
     if (obj.session === undefined) {
@@ -196,6 +201,7 @@ module.exports.connector = function (parent) {
 
   obj.server_startup = function () {
     console.log("Plugin connector is starting");
+  
 
     obj.getConfig();
     obj.localConnect();
