@@ -170,6 +170,10 @@ module.exports.connector = function (parent) {
       console.log("Error connecting to local instance: " + err);
       console.trace();
     }
+    
+    var groups = await obj.session.list_device_groups();
+    console.log("Groups: " + groups);
+
   };
 
   obj.SendDeviceGroupList = async function () {
