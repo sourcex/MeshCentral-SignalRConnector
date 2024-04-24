@@ -163,9 +163,9 @@ module.exports.connector = function (parent) {
         return;
       }
 
-      obj.session = await Session.create(url, options).then((session) => {
-        console.log("Session created");
-      });
+      obj.session = await Session.create(url, options);
+      console.log("Connected to local instance");
+
     } catch (err) {
       console.log("Error connecting to local instance: " + err);
       console.trace();
