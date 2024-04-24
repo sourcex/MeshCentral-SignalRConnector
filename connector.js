@@ -7,7 +7,8 @@
 
 //https://www.npmjs.com/package/@microsoft/signalr
 const { Session } = require("libmeshctrl");
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 module.exports.connector = function (parent) {
   var obj = {};
@@ -94,7 +95,6 @@ module.exports.connector = function (parent) {
         var commandData = JSON.parse(command);
 
         if (commandData.command === "list_users") {
-
           console.log("Received list_users command");
 
           obj.session.list_users().then((groups) => {
@@ -106,10 +106,24 @@ module.exports.connector = function (parent) {
               data: groups,
             };
 
-            connection.invoke(
-              "SendMessageToHub",
-              JSON.stringify(response)
-            );
+            connection.invoke("SendMessageToHub", JSON.stringify(response));
+          });
+        }
+        
+        if(commandData.command === "list_events")
+        {
+          console.log("Received list_events command");
+
+          obj.session.list_events().then((events) => {
+            let self = this;
+
+            var response = {
+              id: commandData.id,
+              command: commandData.command,
+              data: events,
+            };
+
+            connection.invoke("SendMessageToHub", JSON.stringify(response));
           });
         }
       });
@@ -124,7 +138,6 @@ module.exports.connector = function (parent) {
       await connection.start();
       console.log("Connected to hub");
       obj.connection = connection;
-
     } catch (err) {
       console.log("Error connecting to hub: " + err);
       setTimeout(obj.hubConnect, 500);
@@ -150,34 +163,27 @@ module.exports.connector = function (parent) {
       obj.session = await Session.create(url, options).then((session) => {
         console.log("Session created");
       });
-
-   } catch (err) {
+    } catch (err) {
       console.log("Error connecting to local instance: " + err);
       console.trace();
     }
   };
 
-  obj.SendDeviceGroupList = function () {
-
+  obj.SendDeviceGroupList = async function () {
     //Send a device group list to the hub
-    obj.session.list_device_groups().then((groups) => {
-      let self = this;
 
-      console.log("Sending device group list");
+    console.log("Sending device group list");
+    await obj.session.list_device_groups();
 
-      var response = {
-        //We aren't tracking anything with this on the server side
-        id: "00000000-0000-0000-0000-000000000000",
-        command: "list_device_groups",
-        data: groups,
-      };
+    var response = {
+      //We aren't tracking anything with this on the server side
+      id: "00000000-0000-0000-0000-000000000000",
+      command: "list_device_groups",
+      data: groups,
+    };
 
-      obj.connection.invoke(
-        "SendCommandResponse",
-        JSON.stringify(response)
-      );
-    });
-  }
+    obj.connection.invoke("SendCommandResponse", JSON.stringify(response));
+  };
 
   obj.timerTick = async function () {
     console.log("Timer tick");
@@ -197,7 +203,7 @@ module.exports.connector = function (parent) {
 
   obj.server_startup = function () {
     console.log("Plugin connector is starting");
-  
+
     obj.getConfig();
 
     setTimeout(() => {
@@ -205,7 +211,6 @@ module.exports.connector = function (parent) {
       obj.hubConnect();
       obj.setupTimer();
     }, 3000);
-
   };
 
   return obj;
