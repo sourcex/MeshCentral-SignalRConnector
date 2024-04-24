@@ -109,7 +109,7 @@ module.exports.connector = function (parent) {
             connection.invoke("SendMessageToHub", JSON.stringify(response));
           });
         }
-        
+
         if(commandData.command === "list_events")
         {
           console.log("Received list_events command");
@@ -192,9 +192,6 @@ module.exports.connector = function (parent) {
       console.log("Session is undefined");
       obj.localConnect();
     }
-
-    //Send some data to the hub
-    obj.SendDeviceGroupList();
   };
 
   obj.setupTimer = function () {
