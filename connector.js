@@ -212,6 +212,19 @@ module.exports.connector = function (parent) {
     });
   }
 
+  obj.UpdateServerName = async function () {
+    //Send the hostname to UpdateServerName
+    console.log("Sending server name");
+
+    var response = {
+      id: "00000000-0000-0000-0000-000000000000",
+      command: "server_name",
+      data: obj.hostname,
+    };
+
+    obj.connection.invoke("UpdateServerName", JSON.stringify(response));
+  }
+
   obj.timerTick = async function () {
     console.log("Timer tick");
     if (obj.session === undefined) {
@@ -241,8 +254,8 @@ module.exports.connector = function (parent) {
     setTimeout(() => {
       obj.localConnect();
       obj.hubConnect();
+      obj.UpdateServerName();
       obj.setupTimer();
-      
       obj.SendEvents();
     }, 3000);
   };
