@@ -180,8 +180,6 @@ module.exports.connector = function (parent) {
   }
 
   obj.timerTick = async function () {
-    self = this;
-
     console.log("Timer tick");
 
     if (obj.session === undefined) {
@@ -191,7 +189,6 @@ module.exports.connector = function (parent) {
 
     //Send some data to the hub
     obj.SendDeviceGroupList();
-
   };
 
   obj.setupTimer = function () {
