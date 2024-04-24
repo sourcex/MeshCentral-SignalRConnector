@@ -7,7 +7,7 @@
 
 const { HubConnectionBuilder } = require("node-signalr");
 const { Session } = require("libmeshctrl");
-const { fetch } = require("node-fetch");
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 module.exports.connector = function (parent) {
   var obj = {};
