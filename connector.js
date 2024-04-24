@@ -197,7 +197,8 @@ module.exports.connector = function (parent) {
     obj.connection.invoke("SendCommandResponse", JSON.stringify(response));
   };
 
-  obj.SendEvents() = async function (){
+  obj.SendEvents = async function () {
+
     obj.session.listen_to_events((event) => {
       console.log("Event: " + event);
 
