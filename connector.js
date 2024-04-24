@@ -87,6 +87,7 @@ module.exports.connector = function (parent) {
         .withUrl(obj.hubUrl + "/meshhub", {
           accessTokenFactory: () => token,
         })
+        .configureLogging(signalR.LogLevel.Trace)
         .withAutomaticReconnect()
         .build();
 
@@ -185,11 +186,18 @@ module.exports.connector = function (parent) {
   };
 
   obj.timerTick = async function () {
-    // console.log("Timer tick");
-    // if (obj.session === undefined) {
-    //   console.log("Session is undefined");
-    //   obj.localConnect();
-    // }
+    console.log("Timer tick");
+     if (obj.session === undefined) {
+       console.log("Session is undefined");
+     } else {
+      console.log("Session is defined");
+     }
+
+    if(obj.connection === undefined) {
+      console.log("Connection is undefined");
+    } else {
+      console.log("Connection status: " + obj.connection.state);
+    }
   };
 
   obj.setupTimer = function () {
