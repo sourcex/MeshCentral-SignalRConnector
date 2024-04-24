@@ -5,7 +5,7 @@
 
 "use strict";
 
-const { HubConnectionBuilder, HubConnectionState } = require("node-signalr");
+const { HubConnectionBuilder } = require("node-signalr");
 const { Session } = require("libmeshctrl");
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
