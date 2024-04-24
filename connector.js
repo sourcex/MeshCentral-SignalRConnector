@@ -146,8 +146,9 @@ module.exports.connector = function (parent) {
         return;
       }
 
-      obj.session = await Session.create(url, options);
-      console.log("Session created");
+      obj.session = await Session.create(url, options).then((session) => {
+        console.log("Session created");
+      });
 
    } catch (err) {
       console.log("Error connecting to local instance: " + err);
@@ -160,6 +161,8 @@ module.exports.connector = function (parent) {
     obj.session.list_device_groups().then((groups) => {
       let self = this;
 
+      console.log("Sending device group list");
+      
       var response = {
         //We aren't tracking anything with this on the server side
         id: "00000000-0000-0000-0000-000000000000",
@@ -181,6 +184,10 @@ module.exports.connector = function (parent) {
       console.log("Session is undefined");
       obj.localConnect();
     }
+
+    //Send some data to the hub
+    obj.SendDeviceGroupList();
+
   };
 
   obj.setupTimer = function () {
