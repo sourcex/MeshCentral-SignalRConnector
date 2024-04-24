@@ -95,19 +95,22 @@ module.exports.connector = function (parent) {
         console.log("Received command: " + command);
         var commandData = JSON.parse(command);
 
+        obj.localConnect();
+
         if (commandData.command === "list_users") {
           console.log("Received list_users command");
 
-          obj.session.list_users().then((groups) => {
-            let self = this;
+          obj.session.list_users().then((users) => {
+
+            console.log("List users response: " + users);
 
             var response = {
               id: commandData.id,
               command: commandData.command,
-              data: groups,
+              data: users,
             };
 
-            connection.invoke("SendMessageToHub", JSON.stringify(response));
+            obj.connection.invoke("SendMessageToHub", JSON.stringify(response));
           });
         }
 
