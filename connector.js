@@ -160,7 +160,6 @@ module.exports.connector = function (parent) {
   obj.SendDeviceGroupList = function () {
 
     //Send a device group list to the hub
-    obj.session.list_device_groups();
     obj.session.list_device_groups().then((groups) => {
       let self = this;
 
@@ -202,12 +201,14 @@ module.exports.connector = function (parent) {
   obj.server_startup = function () {
     console.log("Plugin connector is starting");
   
-
     obj.getConfig();
-    obj.localConnect();
-    obj.hubConnect();
 
-    obj.setupTimer();
+    setTimeout(() => {
+      obj.localConnect();
+      obj.hubConnect();
+      obj.setupTimer();
+    }, 3000);
+
   };
 
   return obj;
