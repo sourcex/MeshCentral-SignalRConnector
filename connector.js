@@ -110,8 +110,7 @@ module.exports.connector = function (parent) {
           });
         }
 
-        if(commandData.command === "list_events")
-        {
+        if (commandData.command === "list_events") {
           console.log("Received list_events command");
 
           obj.session.list_events().then((events) => {
@@ -186,12 +185,11 @@ module.exports.connector = function (parent) {
   };
 
   obj.timerTick = async function () {
-    console.log("Timer tick");
-
-    if (obj.session === undefined) {
-      console.log("Session is undefined");
-      obj.localConnect();
-    }
+    // console.log("Timer tick");
+    // if (obj.session === undefined) {
+    //   console.log("Session is undefined");
+    //   obj.localConnect();
+    // }
   };
 
   obj.setupTimer = function () {

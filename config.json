@@ -1,7 +1,7 @@
 {
     "name": "SignalRConnector",
     "shortName": "connector",
-    "version": "0.0.44",
+    "version": "0.0.45",
     "author": "sourcex",
     "description": "Connect",
     "hasAdminPanel": false,
