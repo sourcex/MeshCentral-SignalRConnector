@@ -5,7 +5,7 @@
 
 "use strict";
 
-const { HubConnectionBuilder } = require("node-signalr");
+const { HubConnectionBuilder, HubConnectionState } = require("node-signalr");
 const { Session } = require("libmeshctrl");
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
@@ -125,6 +125,7 @@ module.exports.connector = function (parent) {
 
     } catch (err) {
       console.log("Error connecting to hub: " + err);
+      //setTimeout(obj.hubConnect, 100);
     }
   };
 
@@ -177,7 +178,13 @@ module.exports.connector = function (parent) {
 
     if (obj.session === undefined) {
       console.log("Session is undefined");
-      return;
+      obj.localConnect();
+    }
+
+    console.log("SignalR status: " + obj.connection.state)
+    if (obj.connection.state != HubConnectionState.Connected) {
+      console.log("Reconnecting to SignalR hub");
+      obj.hubConnect();
     }
   };
 
